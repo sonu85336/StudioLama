@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "../Css/Step1.module.css";
 import { formSchema } from "../schema";
 import { useFormik } from "formik";
@@ -7,21 +7,29 @@ const initialValues = {
   name: "",
   email: "",
   mobile: "",
-  weeks: "",
+   
   date_of_birth: "",
   weight:"",
   height:"",
   born:'',
 };
-function Step1() {
+function Step1(props) {
+
+  const [weeks,setWeeks] = useState(false)
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
      validationSchema:formSchema,
       onSubmit: (values, action) => {
         console.log(values);
+        props.nextpageHandler()
+    localStorage.setItem('value',JSON.stringify(values))
       },
     });
+    const weeksHandler = () =>{
+      setWeeks(true)
+    }
+     
   return (
     <div>
       <div className="container">
@@ -32,7 +40,7 @@ function Step1() {
           </h5>
         </div>
         <div className="row py-3">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={ handleSubmit} >
             {/* name */}
             <div className="form-group mb-2">
               <label htmlFor="name">Child's name</label>
@@ -77,6 +85,7 @@ function Step1() {
                   defaultChecked 
 
                   onBlur={handleBlur}
+                  onClick={()=>setWeeks(false)}
                 />
                 <label htmlFor="NO" className="form-check-label">
                   No
@@ -89,6 +98,7 @@ function Step1() {
                   name="weeks"
                   className="form-check-input"
                   onBlur={handleBlur}
+                  onClick={()=>weeksHandler()}
                 />
                 <label htmlFor="Yes" className="form-check-label">
                   Yes
@@ -96,7 +106,7 @@ function Step1() {
               </div>
             </div>
             {/* if Yes */}
-            <div className="form-group mb-2">
+            {weeks && (<div className="form-group mb-2">
               <label htmlFor="born">Born in weeks</label>
               <input
                 type="number"
@@ -110,7 +120,7 @@ function Step1() {
             onBlur={handleBlur}
               />
               {errors.born&& touched.born? (<p  style={{color:'red'}}>{errors.born}</p>):null}
-            </div>
+            </div>)}
             {/* weight */}
             <div className="form-group row mb-2">
               <div className="w-50">
@@ -185,8 +195,12 @@ function Step1() {
                 </div>
               </div>
             </div>
+            {/* <button type="submit" > submit</button> */}
             {/* ************** */}
-            <button>submit</button>
+            <button type="submit" style={{width:'290px'}}   className="btn btn-primary btn-sm btn-block"   
+              
+            >Next</button> 
+            
           </form>
         </div>
       </div>

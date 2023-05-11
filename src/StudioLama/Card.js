@@ -7,13 +7,16 @@ import Step3 from './Component/Step3';
 import Step4 from './Component/Step4';
 function Card() {
     const [page,setPage] = useState(0)
+     
     const FormStep = ['step1','step2','step3' , 'step4']
-
+ const nextpageHandler = ()=>{
+        setPage((currpage)=>currpage + 1)
+ } 
     const pageDisplay = () =>{
         if(page===0){
-            return <Step1/>
+            return <Step1 nextpageHandler ={nextpageHandler }/>
         }else if(page===1){
-          return <Step2/>
+          return <Step2 nextpageHandler ={nextpageHandler }/>
         }else if(page===2){
 return <Step3/>
         }else if(page===3){
@@ -21,7 +24,7 @@ return <Step4/>
         }
     }
   return (
-    <div className='container'>
+    <div  >
      <div className={classes.Card}>
           <div className={classes.back}><button disabled={page==0} onClick={()=>{setPage((currpage)=>currpage - 1)}}><ArrowBackIcon/> Back</button></div>
 
@@ -34,7 +37,7 @@ return <Step4/>
 </div>
 
     
-     <button type="button" style={{width:'290px'}}   className="btn btn-primary btn-sm btn-block m-2 p-2" disabled={page===FormStep.length-1} onClick={()=>{setPage((currpage)=>currpage + 1)}}>Next</button>
+       {/* <button type="submit" style={{width:'290px'}}   className="btn btn-primary btn-sm btn-block m-2 p-2" disabled={page===FormStep.length-1}  onClick={()=>{setPage((currpage)=>currpage + 1)}}  >Next</button>     */}
     </div>      
      </div>
   ) 

@@ -8,5 +8,5 @@ export const formSchema = Yup.object({
     .max(today, 'Date cannot be in the future and current')
     .required('Date is required'),
     mobile:Yup.number().required("Please enter your mobile number"),
-born:Yup.number().min(20).max(36).required('Please enter weeks')
+born:Yup.number().min(20).max(36) 
 })
